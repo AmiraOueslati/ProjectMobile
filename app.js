@@ -4,7 +4,7 @@ const path = require("path");
 // const logger = require("morgan"); // Décommentez si vous utilisez `morgan`
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Connexion à MongoDB
 mongoose.connect("mongodb://localhost:27017/mydatabase")
@@ -24,10 +24,14 @@ app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 
 // Importation des routes
-const productRoutes = require("./routes/productRoutes"); // Vérifiez le chemin
-app.use("/products", productRoutes);
+const productRoutes = require("./routes/productRoutes"); // Chemin corrigé vers le fichier productRoutes
+const userRoutes = require("./routes/UserRoutes"); // Assurez-vous que le fichier userRoutes existe dans le dossier routes
 
-const uploads = require("./routes/uploads"); // Vérifiez le chemin
+// Utilisation des routes
+app.use("/products", productRoutes);
+app.use('/api/users', userRoutes);
+
+const uploads = require("./routes/uploads"); // Chemin vers le fichier uploads
 app.use("/api/upload", uploads);
 
 // Lancement du serveur
